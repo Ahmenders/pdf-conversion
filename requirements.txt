@@ -1,7 +1,12 @@
 Flask
 pdf2pptx
-docxcompose==1.0.0a1
+mammoth
+pdf2image
+ppt2pdf
 pdfkit
+htmldocx
+python-docx
+docxcompose==1.0.0a1
 PyMuPDF>=1.19.0
 python-docx>=0.8.10
 fonttools>=4.24.0

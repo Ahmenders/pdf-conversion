@@ -22,10 +22,22 @@ def get_data():
     response = None
     if current == "pdf" and to == "docx":
         response = pdf2doc(path, outputPath)
-    elif current == "pdf" and to =="ppt":
+    elif current == "pdf" and to == "ppt":
         response = pdf2ppt(path, outputPath)
     elif current == "pdf" and to == "csv":
         response = pdf2csv(path, outputPath)
+    elif current == "pdf" and to == "html":
+        response = pdf2html(path, outputPath)
+    elif current == "pdf" and to == "jpg":
+        response = pdf2JPEG(path, outputPath)
+    elif current == "docx" and to == "pdf":
+        response = docx2pdf(path, outputPath)
+    elif current == "csv" and to == "pdf":
+        response = csv2pdf(path, outputPath)
+    elif current == "html" and to == "pdf":
+        response = html2pdf(path, outputPath)
+    elif current == "ppt" and to == "pdf":
+        response = ppt2pdf(path, outputPath)
     else:
         logging.exception("#Error No support for the given conversion")
         return {"status": "failed", "message": "No support for the given conversion", "data": None}
