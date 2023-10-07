@@ -16,6 +16,10 @@ import ppt2pdf
 from docx import Document
 from htmldocx import HtmlToDocx
 
+from pptx import Presentation
+from pptx.util import Inches
+import PyPDF2
+
 
 
 def count_pdf_pages(pdf_file_path):
@@ -186,6 +190,62 @@ def html2pdf(path, outputPath):
     os.remove(out)
     
     return ret
+
+
+
+
+
+
+
+def extract_text_from_pdf(pdf_file):
+    text = ""
+    listt = []
+    with open(pdf_file, 'rb') as pdf:
+        pdf_reader = PyPDF2.PdfReader(pdf)
+        for page_num in range(len(pdf_reader.pages)):
+            page = pdf_reader.pages[page_num]
+            listt.append(page.extract_text())
+    return listt
+
+
+def create_presentation(strings, output_file):
+    # Create a new presentation
+    X = Presentation()
+    Layout = X.slide_layouts[0]
+    
+    first_slide = X.slides.add_slide(Layout)
+    text = strings[0]
+    title_text = text.split('\n')
+    title = first_slide.shapes.title
+    title.text = title_text[0]
+
+    first_slide.shapes.title.text = title_text[0]
+    first_slide.placeholders[1].text = '\n'.join(title_text[1:])
+
+    for text in strings[1:]:   
+        title_text = text.split('\n')     
+        Second_Layout = X.slide_layouts[5]
+        second_slide = X.slides.add_slide(Second_Layout)
+        second_slide.shapes.title.text = title_text[0]
+
+        textbox = second_slide.shapes.add_textbox(Inches(3), Inches(1.5),Inches(3), Inches(1)) 
+        textframe = textbox.text_frame
+        paragraph = textframe.add_paragraph()
+        paragraph.text = '\n'.join(title_text[1:])
+
+    # Save the presentation to the specified file
+    X.save(output_file)
+    
+    
+def pdf2PPT(path, outputPath):
+    filename = getFilename(path)
+    out = f"{outputPath}/{filename}.pptx"
+    
+    texts = extract_text_from_pdf(path)
+    create_presentation(texts, out)
+    
+    return True
+
     
     
     

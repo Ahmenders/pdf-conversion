@@ -23,7 +23,7 @@ def get_data():
     if current == "pdf" and to == "docx":
         response = pdf2doc(path, outputPath)
     elif current == "pdf" and to == "ppt":
-        response = pdf2ppt(path, outputPath)
+        response = pdf2PPT(path, outputPath)
     elif current == "pdf" and to == "csv":
         response = pdf2csv(path, outputPath)
     elif current == "pdf" and to == "html":
