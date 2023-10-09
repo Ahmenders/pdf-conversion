@@ -121,11 +121,7 @@ def convert_to(folder, source, timeout=None):
 
     process = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
     filename = re.search('-> (.*?) using filter', process.stdout.decode())
-
-    if filename is None:
-        raise LibreOfficeError(process.stdout.decode())
-    else:
-        return filename.group(1)
+    return True
     
 
 
@@ -139,13 +135,24 @@ def libreoffice_exec():
 class LibreOfficeError(Exception):
     def __init__(self, output):
         self.output = output
-        
+
+
+from docx2pdf import convert
+
+# convert("input.docx")
+# convert("input.docx", "output.pdf")
+# convert("my_docx_folder/")
+
+def convert_mac_doc_to_pdf(path, outputPath):
+    convert(path, outputPath)
+    
+    
 
 def docx2pdf(path, outputPath):
     filename = getFilename(path)
     out = f"{outputPath}/{filename}.pdf"
-    convert_to(outputPath, path)
-    
+    # convert_to(outputPath, path)
+    convert_mac_doc_to_pdf(path, outputPath)
     return out
 
 
@@ -190,8 +197,6 @@ def html2pdf(path, outputPath):
     os.remove(out)
     
     return ret
-
-
 
 
 
